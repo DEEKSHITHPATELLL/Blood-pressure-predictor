@@ -29,9 +29,9 @@ const AiSuggestion = () => {
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
-        const genAI = new GoogleGenerativeAI(
-          'AIzaSyClyrI2xK2A4HqWxIP-aQAjcWPAAXRW0fI'
-        );
+        const genAI = new GoogleGenerativeAI(`
+          ${import.meta.env.VITE_GEMINI_API_KEY}
+       `);
         const model = genAI.getGenerativeModel({
           model: 'gemini-2.5-flash'
         });
