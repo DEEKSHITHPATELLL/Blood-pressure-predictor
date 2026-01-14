@@ -9,7 +9,7 @@ import requests
 
 
 app = Flask(__name__)
-CORS(app)  
+CORS(app,origins="*")  
 
 model = joblib.load(r'D:/projects/BP predictor/backend/models/bp_xgboost_model.pkl')
 label_map = joblib.load(r'D:/projects/BP predictor/backend/models/bp_label_map.pkl')
@@ -77,4 +77,4 @@ def predict():
         return jsonify({'error': str(e)}), 400
     
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(hsot="0.0.0.0",debug=True)
