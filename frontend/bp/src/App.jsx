@@ -1,26 +1,40 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './App.css'
 
 function App() {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    Age: '',
-    Gender: '',
-    BMI: '',
-    SystolicBP: '',
-    DiastolicBP: '',
-    HeartRate: '',
-    Diabetes: '',
-    Cholesterol: '',
-    Smoking: '',
-    Alcohol: '',
-    PhysicalActivity: '',
-    StressLevel: '',
-    SleepHours: ''
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem('bpFormData');
+    return savedData ? JSON.parse(savedData) : {
+      Age: '',
+      Gender: '',
+      BMI: '',
+      SystolicBP: '',
+      DiastolicBP: '',
+      HeartRate: '',
+      Diabetes: '',
+      Cholesterol: '',
+      Smoking: '',
+      Alcohol: '',
+      PhysicalActivity: '',
+      StressLevel: '',
+      SleepHours: ''
+    };
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [prediction, setPrediction] = useState('');
+  const [prediction, setPrediction] = useState(() => {
+    const savedPrediction = localStorage.getItem('bpPrediction');
+    return savedPrediction || '';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('bpFormData', JSON.stringify(formData));
+  }, [formData]);
+
+  useEffect(() => {
+    localStorage.setItem('bpPrediction', prediction);
+  }, [prediction]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
